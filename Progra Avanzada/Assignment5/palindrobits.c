@@ -1,30 +1,31 @@
 #include <stdio.h>
 
-void cambiarABinarioDe32BitsSinSigno(unsigned int n, char* cadena, int* length){
-  unsigned int masc = 0x80000000;
-  int bandera  = 0;
-  for (int i = 0; i < 32; i++) {
-    if((masc >> i)& n){
-      *(cadena + *length) = ('1');
-      (*length) ++;
-      bandera = 1;
-    }
-    else if (bandera){
-      *(cadena + *length) = ('0');
-      (*length)++;
-
+int contar(int a){
+  unsigned long masc = 0x80000000;
+  unsigned long ula = (unsigned long )a;
+  int cuenta = 0;
+  int length=32;
+  for(int i = 0; i < length; i++){
+    if(!((masc >> i)& ula)){
+      cuenta++;
 
     }
+    else
+      break;
   }
+  return 32-cuenta;
 }
+int esPalindroBit(int a){
+  unsigned long ula=(unsigned long)a;
+  unsigned long masc = 0x80000000;
+  unsigned long masc2 = 0x00000001;
+  if(!ula){return 1;}
+  int len=contar(a);
+  masc=masc>>(32-len);
 
-int esPalindroBit(char* arreglo, int length){
-  if((length==1)){return 1;}
+for(int i = 0; i < len/2-1; i++){
 
-
-for(int i = 0; i < length/2; i++){
-
-    if(!(*(arreglo + i) == *(arreglo + length - i -1))){
+    if((((masc>>i)&ula)>>(len-1-i) != ((masc2<<i)&ula)>>i)){
     return 0;
     }
 
@@ -38,15 +39,7 @@ int main(int argc, char const *argv[]) {
   int n;
   scanf("%d", &n);
 
-  char arreglo[33];
-  for(int i = 0; i < 33; i++){
-    arreglo[i] = 0;
-  }
-
-  int length = 0;
-
-  cambiarABinarioDe32BitsSinSigno(n, arreglo, &length);
   // printf("%s\n", arreglo);
-  printf("%d\n", esPalindroBit(arreglo, length));
+  printf("%d\n", esPalindroBit(n));
   return 0;
 }

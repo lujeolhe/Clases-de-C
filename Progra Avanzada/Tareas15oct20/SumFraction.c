@@ -9,17 +9,21 @@ int denominador;
 
 /////Prototipos de Funciones////////
 struct Fraction simplifyFraction(const struct Fraction *f);
-
+struct Fraction sumFraction(const struct Fraction *a, const struct Fraction *b);
 
 /////Funcion Principal///////
 int main() {
 
   struct Fraction i;
+  struct Fraction j;
   scanf("%d",&i.numerador);
   scanf("%d",&i.denominador);
 
-  const struct Fraction *pi=&i;
-  struct Fraction r=simplifyFraction(pi);
+  scanf("%d",&j.numerador);
+  scanf("%d",&j.denominador);
+
+
+  struct Fraction r=sumFraction((const struct Fraction*)&i,(const struct Fraction*)&j);
   printf("%d\n%d",r.numerador,r.denominador );
 
 
@@ -44,4 +48,8 @@ struct Fraction simplifyFraction(const struct Fraction *f){
     }
   }
   return ff;
+}
+struct Fraction sumFraction(const struct Fraction *a, const struct Fraction *b){
+  const struct Fraction sum={a->denominador*b->numerador+b->denominador*a->numerador,b->denominador*a->denominador};
+  return simplifyFraction(&sum);
 }

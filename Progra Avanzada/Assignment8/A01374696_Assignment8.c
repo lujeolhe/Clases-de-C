@@ -88,7 +88,39 @@ double media(double* arr, unsigned int length){
 
 Instance* averageDataset(const Instance* const arr, const unsigned int length){
   Instance* instanciaProm = (Instance*)malloc(sizeof(Instance));
+  unsigned const int sizeOfFeatures = arr -> length;
+  instanciaProm -> length = sizeOfFeatures;
+  instanciaProm -> features = (double*)malloc(sizeof(double) * sizeOfFeatures);
+  instanciaProm -> featureTypes = (FeatureType*)malloc(sizeof(FeatureType) * sizeOfFeatures);
 
+  for(unsigned int i = 0; i < sizeOfFeatures; i++){
+    // int banderaIgual = 1;
+    FeatureType currentFeatureType = *((arr -> featureTypes) + i);
+    double arrAux[length];
+    arrAux[0] = *((arr -> features) + i);
+    for(unsigned int j = 1; j < length; j++){
+
+      if(*(((arr + j) -> featureTypes) + i) != currentFeatureType){
+        return NULL;
+      }
+
+      if(((arr + j) -> length) != sizeOfFeatures){
+        return NULL;
+      }
+
+      arrAux[j] = *(((arr + j) -> features) + i);
+    }
+
+    if(currentFeatureType == numerical){
+      *((instanciaProm -> featureTypes) + i) = numerical;
+      *((instanciaProm -> features) + i) = media(arrAux, length);
+    }
+
+    else{
+      *((instanciaProm -> featureTypes) + i) = nominal;
+      *((instanciaProm -> features) + i) = moda(arrAux, length);
+    }
+  }
   return instanciaProm;
 }
 

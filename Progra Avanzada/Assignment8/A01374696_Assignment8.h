@@ -14,3 +14,14 @@ Instance* findNearestNeighbor(const Instance* const arr, const unsigned int leng
 Instance* averageDataset(const Instance* const arr, const unsigned int length);
 double moda(double* arr, unsigned int length);
 double media(double* arr, unsigned int length);
+int testComputeEuclidianDissimilarity1();
+int testComputeEuclidianDissimilarity2();
+int testComputeEuclidianDissimilarity3();
+int testComputeEuclidianDissimilarity4();
+int testFindNearestNeighbor1();
+int testAverageDataset1();
+int testAverageDataset2();
+int testAverageDataset3();
+int testAverageDataset4();
+Instance* createInstance(int length);
+void freeInstance(Instance* instance);
